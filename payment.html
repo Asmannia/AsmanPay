@@ -2,39 +2,409 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Payment</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
+
 
 <body>
 
     <header>
+
         <h1>PAYMENT</h1>
+
         <p>Pilih kaedah pembayaran</p>
+
     </header>
 
 
     <main>
 
-      <section>
+        <section>
 
-    <h2>Order Payment</h2>
+            <h2>Order Payment</h2>
 
-    <div class="payment-summary">
 
-        <p>
-            Game:
-            <strong id="paymentGame"></strong>
-        </p>
+            <div class="payment-summary">
 
-        <p>
-            Diamond:
-            <strong id="paymentProduct"></strong>
-        </p>
+                <p>
+                    Game:
+                    <strong id="paymentGame"></strong>
+                </p>
+
+                <p>
+                    Diamond:
+                    <strong id="paymentProduct"></strong>
+                </p>
+
+                <p>
+                    Player ID:
+                    <strong id="paymentPlayerId"></strong>
+                </p>
+
+                <p>
+                    Zone ID:
+                    <strong id="paymentZoneId"></strong>
+                </p>
+
+                <p>
+                    Jumlah:
+                    <strong id="paymentPrice"></strong>
+                </p>
+
+            </div>
+
+
+            <h2>Pilih Payment</h2>
+
+
+            <button
+                class="payment-option"
+                data-payment="QR Payment"
+            >
+                QR Payment
+            </button>
+
+
+            <button
+                class="payment-option"
+                data-payment="Online Banking"
+            >
+                Online Banking
+            </button>
+
+
+            <button
+                class="payment-option"
+                data-payment="E-Wallet"
+            >
+                E-Wallet
+            </button>
+
+
+            <br>
+            <br>
+
+
+            <button id="confirmPaymentButton">
+                Bayar Sekarang
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <!-- SUPABASE -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <script>
+
+        // =========================
+        // SUPABASE
+        // =========================
+
+        const SUPABASE_URL =
+            "PASTE URL SUPABASE KAU DI SINI";
+
+        const SUPABASE_KEY =
+            "PASTE PUBLISHABLE KEY KAU DI SINI";
+
+
+        const supabaseClient =
+            supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
+
+
+        // =========================
+        // AMBIL DATA ORDER
+        // =========================
+
+        const game =
+            localStorage.getItem("orderGame");
+
+        const product =
+            localStorage.getItem("orderProduct");
+
+        const productId =
+            localStorage.getItem("orderProductId");
+
+        const playerId =
+            localStorage.getItem("orderPlayerId");
+
+        const zoneId =
+            localStorage.getItem("orderZoneId");
+
+        const price =
+            localStorage.getItem("orderPrice");
+
+
+        // =========================
+        // PAPAR DATA
+        // =========================
+
+        document.getElementById(
+            "paymentGame"
+        ).textContent = game || "-";
+
+
+        document.getElementById(
+            "paymentProduct"
+        ).textContent = product || "-";
+
+
+        document.getElementById(
+            "paymentPlayerId"
+        ).textContent = playerId || "-";
+
+
+        document.getElementById(
+            "paymentZoneId"
+        ).textContent = zoneId || "-";
+
+
+        document.getElementById(
+            "paymentPrice"
+        ).textContent =
+            "RM " +
+            Number(price || 0).toFixed(2);
+
+
+        // =========================
+        // PILIH PAYMENT
+        // =========================
+
+        let selectedPayment = null;
+
+
+        const paymentOptions =
+            document.querySelectorAll(
+                ".payment-option"
+            );
+
+
+        paymentOptions.forEach(
+            function(option) {
+
+                option.addEventListener(
+                    "click",
+                    function() {
+
+                        selectedPayment =
+                            option.getAttribute(
+                                "data-payment"
+                            );
+
+
+                        paymentOptions.forEach(
+                            function(item) {
+
+                                item.classList.remove(
+                                    "selected"
+                                );
+
+                            }
+                        );
+
+
+                        option.classList.add(
+                            "selected"
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+        // =========================
+        // BAYAR SEKARANG
+        // =========================
+
+        const confirmPaymentButton =
+            document.getElementById(
+                "confirmPaymentButton"
+            );
+
+
+        confirmPaymentButton.addEventListener(
+            "click",
+            async function() {
+
+                // Check payment
+
+                if (!selectedPayment) {
+
+                    alert(
+                        "Sila pilih payment."
+                    );
+
+                    return;
+
+                }
+
+
+                // Check product ID
+
+                if (!productId) {
+
+                    alert(
+                        "Product ID tidak dijumpai."
+                    );
+
+                    return;
+
+                }
+
+
+                // Check Player ID
+
+                if (!playerId) {
+
+                    alert(
+                        "Player ID tidak dijumpai."
+                    );
+
+                    return;
+
+                }
+
+
+                // Check Zone ID
+
+                if (!zoneId) {
+
+                    alert(
+                        "Zone ID tidak dijumpai."
+                    );
+
+                    return;
+
+                }
+
+
+                // Disable button
+
+                confirmPaymentButton.disabled =
+                    true;
+
+
+                confirmPaymentButton.textContent =
+                    "Menyimpan order...";
+
+
+                // =========================
+                // SIMPAN ORDER KE SUPABASE
+                // =========================
+
+                const { data, error } =
+                    await supabaseClient.rpc(
+                        "create_guest_order",
+                        {
+                            p_product_id:
+                                Number(productId),
+
+                            p_player_id:
+                                playerId,
+
+                            p_zone_id:
+                                zoneId,
+
+                            p_payment_method:
+                                selectedPayment
+                        }
+                    );
+
+
+                // =========================
+                // CHECK ERROR
+                // =========================
+
+                console.log(
+                    "ORDER ID:",
+                    data
+                );
+
+
+                console.log(
+                    "ORDER ERROR:",
+                    error
+                );
+
+
+                if (error) {
+
+                    console.error(error);
+
+
+                    alert(
+                        "Gagal simpan order:\n" +
+                        error.message
+                    );
+
+
+                    confirmPaymentButton.disabled =
+                        false;
+
+
+                    confirmPaymentButton.textContent =
+                        "Bayar Sekarang";
+
+
+                    return;
+
+                }
+
+
+                // =========================
+                // SIMPAN ORDER ID
+                // =========================
+
+                localStorage.setItem(
+                    "orderId",
+                    data
+                );
+
+
+                localStorage.setItem(
+                    "paymentMethod",
+                    selectedPayment
+                );
+
+
+                // =========================
+                // SUCCESS
+                // =========================
+
+                window.location.href =
+                    "success.html";
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>        </p>
 
         <p>
             Player ID:
