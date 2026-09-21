@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Payment</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>PAYMENT</h1>
+        <p>Pilih kaedah pembayaran</p>
+    </header>
+
+
+    <main>
+
+      <section>
+
+    <h2>Order Payment</h2>
+
+    <div class="payment-summary">
+
+        <p>
+            Game:
+            <strong id="paymentGame"></strong>
+        </p>
+
+        <p>
+            Diamond:
+            <strong id="paymentProduct"></strong>
+        </p>
+
+        <p>
+            Player ID:
+            <strong id="paymentPlayerId"></strong>
+        </p>
+
+        <p>
+            Zone ID:
+            <strong id="paymentZoneId"></strong>
+        </p>
+
+        <p>
+            Jumlah:
+            <strong id="paymentPrice"></strong>
+        </p>
+
+    </div>
+
+
+    <h2>Pilih Payment</h2>
+
+    <button class="payment-option" data-payment="QR Payment">
+        QR Payment
+    </button>
+
+    <button class="payment-option" data-payment="Online Banking">
+        Online Banking
+    </button>
+
+    <button class="payment-option" data-payment="E-Wallet">
+        E-Wallet
+    </button>
+
+
+    <button id="confirmPaymentButton">
+        Bayar Sekarang
+    </button>
+
+</section>
+
+    </main>
+
+
+<script>
+
+    // =========================
+    // AMBIL DATA ORDER
+    // =========================
+
+    const game =
+        localStorage.getItem("orderGame");
+
+    const product =
+        localStorage.getItem("orderProduct");
+
+    const playerId =
+        localStorage.getItem("orderPlayerId");
+
+    const zoneId =
+        localStorage.getItem("orderZoneId");
+
+    const price =
+        localStorage.getItem("orderPrice");
+
+
+    // =========================
+    // PAPARKAN DATA
+    // =========================
+
+    document.getElementById("paymentGame").textContent =
+        game || "-";
+
+    document.getElementById("paymentProduct").textContent =
+        product || "-";
+
+    document.getElementById("paymentPlayerId").textContent =
+        playerId || "-";
+
+    document.getElementById("paymentZoneId").textContent =
+        zoneId || "-";
+
+    document.getElementById("paymentPrice").textContent =
+        "RM " + Number(price || 0).toFixed(2);
+
+
+    // =========================
+    // PAYMENT
+    // =========================
+
+    let selectedPayment = null;
+
+
+    const paymentOptions =
+        document.querySelectorAll(".payment-option");
+
+
+    paymentOptions.forEach(function(option) {
+
+        option.addEventListener(
+            "click",
+            function() {
+
+                selectedPayment =
+                    option.getAttribute(
+                        "data-payment"
+                    );
+
+
+                paymentOptions.forEach(
+                    function(item) {
+
+                        item.classList.remove(
+                            "selected"
+                        );
+
+                    }
+                );
+
+
+                option.classList.add(
+                    "selected"
+                );
+
+            }
+        );
+
+    });
+
+
+    // =========================
+    // BAYAR
+    // =========================
+
+    const confirmPaymentButton =
+        document.getElementById(
+            "confirmPaymentButton"
+        );
+
+
+    confirmPaymentButton.addEventListener(
+        "click",
+        function() {
+
+            if (!selectedPayment) {
+
+                alert(
+                    "Sila pilih payment."
+                );
+
+                return;
+            }
+
+
+            localStorage.setItem(
+                "paymentMethod",
+                selectedPayment
+            );
+
+
+            window.location.href =
+                "success.html";
+
+        }
+    );
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,170 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #111827;
+    color: white;
+}
+
+header {
+    text-align: center;
+    padding: 30px 20px;
+    background: #1f2937;
+}
+
+header h1 {
+    margin: 0;
+    color: #60a5fa;
+}
+
+header p {
+    color: #9ca3af;
+}
+
+main {
+    max-width: 900px;
+    margin: auto;
+    padding: 25px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.game-list,
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(180px, 1fr)
+    );
+
+    gap: 15px;
+}
+
+.game-card,
+.product-card {
+    background: #1f2937;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.game-card {
+    cursor: pointer;
+}
+
+.game-card:hover,
+.product-card:hover {
+    background: #374151;
+}
+
+.product-card {
+    cursor: pointer;
+}
+
+.product-card.selected {
+    border: 2px solid #60a5fa;
+}
+
+.product-card h3 {
+    margin-top: 0;
+}
+
+.price {
+    color: #60a5fa;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+button {
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #2563eb;
+    color: white;
+    font-size: 15px;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+#backButton {
+    background: #374151;
+    margin-bottom: 20px;
+}
+
+input {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    padding: 13px;
+    margin-bottom: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #1f2937;
+    color: white;
+}
+
+input::placeholder {
+    color: #9ca3af;
+}
+
+.order-summary {
+    background: #1f2937;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+.order-summary p {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    border-bottom: 1px solid #374151;
+    padding: 10px 0;
+}
+
+.summary-price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #60a5fa;
+    border-bottom: none !important;
+}
+
+.payment-list {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.payment-button {
+    width: 100%;
+    text-align: left;
+    background: #1f2937;
+}
+
+.payment-button.selected {
+    background: #2563eb;
+}
+
+ /* =========================
+   PAYMENT BUTTON
+========================= */
+
+.payment-option {
+    cursor: pointer;
+}
+
+
+/* Payment yang dipilih */
+
+.payment-option.selected {
+    border: 2px solid #60a5fa;
+    background-color: #1e3a5f;
+}

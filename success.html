@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Order Berjaya</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>ORDER DITERIMA</h1>
+        <p>Terima kasih kerana membuat order</p>
+    </header>
+
+
+    <main>
+
+        <section>
+
+            <h2>Maklumat Order</h2>
+
+            <p>
+                Game:
+                <strong id="successGame"></strong>
+            </p>
+
+            <p>
+                Diamond:
+                <strong id="successProduct"></strong>
+            </p>
+
+            <p>
+                Player ID:
+                <strong id="successPlayerId"></strong>
+            </p>
+
+            <p>
+                Zone ID:
+                <strong id="successZoneId"></strong>
+            </p>
+
+            <p>
+                Payment:
+                <strong id="successPayment"></strong>
+            </p>
+
+            <p>
+                Jumlah:
+                <strong id="successPrice"></strong>
+            </p>
+
+            <button onclick="window.location.href='index.html'">
+                Kembali ke Home
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        const game =
+            localStorage.getItem("orderGame");
+
+        const product =
+            localStorage.getItem("orderProduct");
+
+        const playerId =
+            localStorage.getItem("orderPlayerId");
+
+        const zoneId =
+            localStorage.getItem("orderZoneId");
+
+        const price =
+            localStorage.getItem("orderPrice");
+
+        const payment =
+            localStorage.getItem("paymentMethod");
+
+
+        document.getElementById("successGame").textContent =
+            game || "-";
+
+        document.getElementById("successProduct").textContent =
+            product || "-";
+
+        document.getElementById("successPlayerId").textContent =
+            playerId || "-";
+
+        document.getElementById("successZoneId").textContent =
+            zoneId || "-";
+
+        document.getElementById("successPayment").textContent =
+            payment || "-";
+
+        document.getElementById("successPrice").textContent =
+            "RM " + Number(price || 0).toFixed(2);
+
+    </script>
+
+</body>
+
+</html>

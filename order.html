@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Order Summary</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>ORDER SUMMARY</h1>
+        <p>Semak maklumat order anda</p>
+    </header>
+
+
+    <main>
+
+        <section id="orderSection">
+
+            <h2>Order Summary</h2>
+
+            <p>
+                Game:
+                <span id="orderGame"></span>
+            </p>
+
+            <p>
+                Diamond:
+                <span id="orderProduct"></span>
+            </p>
+
+            <p>
+                Player ID:
+                <span id="orderPlayerId"></span>
+            </p>
+
+            <p>
+                Zone ID:
+                <span id="orderZoneId"></span>
+            </p>
+
+            <p>
+                Harga:
+                <strong id="orderPrice"></strong>
+            </p>
+
+         <button id="paymentButton">
+    Teruskan ke Payment
+</button>
+
+<script>
+    document.getElementById("paymentButton")
+        .addEventListener("click", function() {
+            
+            window.location.href = "payment.html";
+            
+        });
+</script>
+
+<script>
+    document.getElementById("paymentButton")
+        .addEventListener("click", function() {
+
+            window.location.href = "payment.html";
+
+        });
+</script>
+
+        </section>
+
+    </main>
+
+<script>
+
+    // Ambil data order
+    const game =
+        localStorage.getItem("orderGame");
+
+    const product =
+        localStorage.getItem("orderProduct");
+
+    const playerId =
+        localStorage.getItem("orderPlayerId");
+
+    const zoneId =
+        localStorage.getItem("orderZoneId");
+
+    const price =
+        localStorage.getItem("orderPrice");
+
+
+    // Paparkan data
+    document.getElementById("orderGame").textContent =
+        game || "-";
+
+    document.getElementById("orderProduct").textContent =
+        product || "-";
+
+    document.getElementById("orderPlayerId").textContent =
+        playerId || "-";
+
+    document.getElementById("orderZoneId").textContent =
+        zoneId || "-";
+
+    document.getElementById("orderPrice").textContent =
+        "RM " + Number(price || 0).toFixed(2);
+
+</script>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

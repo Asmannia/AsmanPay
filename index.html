@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Topup Center</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>TOPUP CENTER</h1>
+        <p>Fast & Easy Game Topup</p>
+    </header>
+
+
+    <main>
+
+        <!-- =========================
+             PAGE 1 - PILIH GAME
+        ========================== -->
+
+        <section id="gameSection">
+
+            <h2>Pilih Game</h2>
+
+            <div id="gameList" class="game-list">
+
+                <p>Loading...</p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PAGE 2 - PILIH DIAMOND
+        ========================== -->
+
+        <section id="productSection" style="display: none;">
+
+            <button id="backButton">
+                ← Kembali
+            </button>
+
+            <h2 id="selectedGameName">
+                Pilih Diamond
+            </h2>
+
+            <div id="productList" class="product-list">
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PLAYER ID
+        ========================== -->
+
+        <section id="playerSection" style="display: none;">
+
+            <h2>Maklumat Player</h2>
+
+            <input
+                type="text"
+                id="playerId"
+                placeholder="Masukkan Player ID"
+            >
+
+            <input
+                type="text"
+                id="zoneId"
+                placeholder="Masukkan Zone ID"
+            >
+
+            <button id="continueButton">
+                Teruskan
+            </button>
+
+        </section>
+        
+
+
+ <!-- =========================
+     PAYMENT
+========================== -->
+
+<section id="paymentSection" style="display: none;">
+
+    <h2>Pilih Payment</h2>
+
+    <button class="payment-option" data-payment="QR Payment">
+        QR Payment
+    </button>
+
+    <button class="payment-option" data-payment="Online Banking">
+        Online Banking
+    </button>
+
+    <button class="payment-option" data-payment="E-Wallet">
+        E-Wallet
+    </button>
+
+    <button id="confirmPaymentButton">
+        Bayar Sekarang
+    </button>
+
+</section>
+
+    </main>
+
+
+    <!-- SUPABASE -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
