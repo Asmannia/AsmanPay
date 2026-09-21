@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin Panel</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+<body>
+
+    <header>
+        <h1>ADMIN PANEL</h1>
+        <p>Senarai Order</p>
+    </header>
+
+    <main>
+
+        <section>
+
+            <h2>Orders</h2>
+
+            <div id="orderList">
+                Loading orders...
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- SUPABASE -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <script>
+
+        const SUPABASE_URL =
+            "https://xwbaglonlmyzqlfbqhfz.supabase.co";
+
+        const SUPABASE_KEY =
+            "sb_publishable_4y7E5I_0Gzjc7tMS3FX2RA_2KYumqjo";
+
+
+        const supabaseClient =
+            supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
+
+
+        async function loadOrders() {
+
+            const orderList =
+                document.getElementById(
+                    "orderList"
+                );
+
+
+            const { data, error } =
+                await supabaseClient
+                    .from("orders")
+                    .select("*")
+                    .order("id", {
+                        ascending: false
+                    });
+
+
+            if (error) {
+
+                orderList.innerHTML =
+                    "<p>Gagal load order: " +
+                    error.message +
+                    "</p>";
+
+                return;
+            }
+
+
+            if (!data || data.length === 0) {
+
+                orderList.innerHTML =
+                    "<p>Belum ada order.</p>";
+
+                return;
+            }
+
+
+            orderList.innerHTML = "";
+
+
+            data.forEach(function(order) {
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                card.className =
+                    "card";
+
+
+                card.innerHTML = `
+
+                    <h3>
+                        Order #${order.id}
+                    </h3>
+
+                    <p>
+                        Player ID:
+                        ${order.player_id}
+                    </p>
+
+                    <p>
+                        Zone ID:
+                        ${order.zone_id || "-"}
+                    </p>
+
+                    <p>
+                        Harga:
+                        RM ${Number(
+                            order.total_price
+                        ).toFixed(2)}
+                    </p>
+
+                    <p>
+                        Payment:
+                        ${order.payment_method || "-"}
+                    </p>
+
+                    <p>
+                        Payment Status:
+                        ${order.payment_status}
+                    </p>
+
+                    <p>
+                        Order Status:
+                        ${order.order_status}
+                    </p>
+
+                    <p>
+                        Tarikh:
+                        ${new Date(
+                            order.created_at
+                        ).toLocaleString()}
+                    </p>
+
+                `;
+
+
+                orderList.appendChild(card);
+
+            });
+
+        }
+
+
+        loadOrders();
+
+    </script>
+
+</body>
+
+</html>
